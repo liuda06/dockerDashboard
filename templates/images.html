@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}镜像列表{% endblock %}
+{% block page_content %}
+    <div class="fade-in-up ng-scope">
+        <div id="myTabContent" class="tab-content cup-content">
+            <table class="one"  width="100%">
+                <thead>
+                <tr class="table-one">
+                    <th width="40px"><input onclick="checkall(this)" type="checkbox" value=""/></th>
+                    <th>名称</th>
+                    <th>ID</th>
+                    <th>创建时间</th>
+                    <th>大小</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for image in data %}
+                    <tr>
+                        <td><input width="40px" name="sel_chk" type="checkbox" value="{{ image.Id }}"/></td>
+                        <td>{{ image.RepoTags|first }}</td>
+                    <td>{{ image.Id}}</td>
+                    <td>{{ image.Created}}</td>
+                    <td>{{ image.Size }}</td>
+                    <td style="width:10%"><a href="#">删除</a>｜<a href="#">停止</a>｜<a href="#">启动</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

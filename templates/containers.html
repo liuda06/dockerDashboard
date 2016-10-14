@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}容器列表{% endblock %}
+{% block page_content %}
+    <div class="fade-in-up ng-scope">
+        <div id="myTabContent" class="tab-content cup-content">
+            <table class="one"  width="100%">
+                <thead>
+                <tr class="table-one">
+                    <th width="40px"><input onclick="checkall(this)" type="checkbox" value=""/></th>
+                    <th >ID</th>
+                    <th>IMAGE</th>
+                    <th >COMMAND</th>
+                    <th >CREATED</th>
+                    <th >STATUS</th>
+                    <th >PORTS</th>
+                    <th >NAMES</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for container in data %}
+                    <tr>
+                        <td><input width="40px" name="sel_chk" type="checkbox" value="{{ container.Id }}"/></td>
+                        <td>{{ container.Id }}</td>
+                        <td>{{ container.Image }}</td>
+                        <td>{{ container.Command }}</td>
+                        <td>{{ container.Created }}</td>
+                        <td>{{ container.Status }}</td>
+                        <td>{{ container.Ports }}</td>
+                        <td>{{ container.Names|first }}</td>
+                    　　 <td style="width:10%">
+                        <a href="#">删除</a>｜
+                        {% if 'Exited' in container.Status %}
+                            <a href="/containers/start/{{ container.Id }}">启动</a>
+                        {% else%}
+                            <a href="/containers/stop/{{ container.Id }}">停止</a>
+                        {% endif %}
+
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

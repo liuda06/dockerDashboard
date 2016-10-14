@@ -1,0 +1,15 @@
+table.one {
+    /*table固定大小，防止过长的文字撑破表格*/
+    table-layout: fixed;
+}
+
+td {
+    font-size: 9px;
+    width: 20px;
+    /*定长自动隐藏，显示...*/
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    /*内容居中*/
+    text-align: center;
+}

@@ -1,0 +1,43 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="webkit">
+
+    <title>{% block title %}docker Dashboard{% endblock %}</title>
+    <link href="/static/app/css/base.css" rel="stylesheet" type="text/css"/>
+{#    <script src="/static/js/web-socket.js"></script>#}
+</head>
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-quick-sidebar-over-content ng-scope page-container-bg-solid" >
+    <div class="page-header navbar navbar-fixed-top ng-scope">
+        {% include "header.html" %}
+    </div>
+
+    <div class="page-container">
+        <div class="page-sidebar-wrapper">
+            {% include "menu.html" %}
+        </div>
+        <div class="page-content-wrapper">
+            <div id="mainContainer" class="page-content">
+                {% block page_content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+    {% include "footer.html" %}
+    <div class="modal fade" id="loadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:280px;">
+            <div class="modal-content">
+                <div id="loadBody" class="modal-body">
+                    <div id="loadDialog"></div>
+                    <h6>数据加载中...</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
