@@ -9,10 +9,12 @@
 
     <title>{% block title %}docker Dashboard{% endblock %}</title>
     <link href="/static/app/css/base.css" rel="stylesheet" type="text/css"/>
-{#    <script src="/static/js/web-socket.js"></script>#}
+    <link href="/static/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <script src="/static/lib/jquery.min.js"></script>
+    <script src="/static/lib/bootstrap/js/bootstrap.min.js"></script>
 </head>
-<body class="page-header-fixed page-sidebar-closed-hide-logo page-quick-sidebar-over-content ng-scope page-container-bg-solid" >
-    <div class="page-header navbar navbar-fixed-top ng-scope">
+<body >
+    <div >
         {% include "header.html" %}
     </div>
 
@@ -29,15 +31,15 @@
     </div>
 
     {% include "footer.html" %}
-    <div class="modal fade" id="loadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog" style="width:280px;">
-            <div class="modal-content">
-                <div id="loadBody" class="modal-body">
-                    <div id="loadDialog"></div>
-                    <h6>数据加载中...</h6>
-                </div>
-            </div>
-        </div>
-    </div>
+{#    <div class="modal fade" id="loadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">#}
+{#        <div class="modal-dialog" style="width:280px;">#}
+{#            <div class="modal-content">#}
+{#                <div id="loadBody" class="modal-body">#}
+{#                    <div id="loadDialog"></div>#}
+{#                    <h6>数据加载中...</h6>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
 </body>
 </html>

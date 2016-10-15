@@ -18,6 +18,9 @@
                 </tr>
                 </thead>
                 <tbody>
+                {% if not data %}
+                   <td style="width: 100%;" colspan="9"><span style="font-size: 20px;color:silver">没有可用数据...</span></td>
+                {% endif %}
                 {% for container in data %}
                     <tr>
                         <td><input width="40px" name="sel_chk" type="checkbox" value="{{ container.Id }}"/></td>
@@ -29,8 +32,8 @@
                         <td>{{ container.Ports }}</td>
                         <td>{{ container.Names|first }}</td>
                     　　 <td style="width:10%">
-                        <a href="#">删除</a>｜
-                        {% if 'Exited' in container.Status %}
+                        {% if 'Up' not in container.Status %}
+                            <a href="/containers/delete/{{ container.Id  }}">删除</a>｜
                             <a href="/containers/start/{{ container.Id }}">启动</a>
                         {% else%}
                             <a href="/containers/stop/{{ container.Id }}">停止</a>

@@ -38,9 +38,77 @@ def port_str(s):
     """
     res = []
     for i in s:
-        res.append('%s:%d->%d/%s' %
-                   (i.get('IP'),
-                    i.get('PublicPort'),
-                    i.get('PrivatePort'),
-                    i.get('Type')))
+        if i.get('PublicPort'):
+            res.append('%s:%d->%d/%s' %
+                       (i.get('IP'), i.get('PublicPort'), i.get('PrivatePort'), i.get('Type')))
+        else:
+            res.append('%d/%s' % (i.get('PrivatePort'), i.get('Type')))
     return ' '.join(res)
+
+
+def container_config(image):
+    param = {'Image': image,
+             'OpenStdin': True,  # Keep STDIN open even if not attached ==> -i
+             'Tty': True,  # Allocate a pseudo-TTY ==> -t
+             'StdinOnce': False,  # StdinOnce':False==> -d=true
+             'PublishAllPorts': True,
+             }
+    return json.dumps(param)
+
+def container_config_custom(request):
+    image=request.GET.get('image')
+    start_rule = request.GET.get('start_rule') #0 1 2 d it dit
+    host_path = request.GET.get('host_path')
+    container_path = request.GET.get('container_path')
+    host_port = request.GET.get('host_port')
+    container_port = request.GET.get('container_port')
+    cpu = request.GET.get('cpu')
+    memery = request.GET.get('memery')
+    cmd = request.GET.get('cmd')
+    if start_rule==0:
+        param = {'Image': image,
+                 'OpenStdin': False,
+                 'Tty': False,
+                 'StdinOnce': False,
+                 'PublishAllPorts': True,
+                 }
+    elif start_rule==1:
+        param = {'Image': image,
+                 'OpenStdin': True,
+                 'Tty': True,
+                 'StdinOnce': True,
+                 'PublishAllPorts': True,
+                 }
+    else:
+        param = {'Image': image,
+                 'OpenStdin': True,
+                 'Tty': True,
+                 'StdinOnce': False,
+                 'PublishAllPorts': True,
+                 }
+
+    if host_port and container_port:
+        param['PortBindings'] = {
+            '%s/tcp'%(container_port): [{'HostIp': '', 'HostPort': '%s'%(host_port)}]
+        }
+    if host_path and container_path:
+        param['Mounts'] = [
+            {
+                'Source': '%s'%(host_path),
+                'Destination': '%s'%(container_path),
+                'Mode': '',
+                'RW': True,
+                'Propagation': 'rslave'
+            }
+        ]
+
+    if memery:
+        param['Memory']=memery
+    if cpu:
+       #  Cpu ==> http://www.open-open.com/news/view/1780c43
+       pass
+
+    if cmd:
+        param['Cmd']=[cmd]
+
+    return json.dumps(param)
