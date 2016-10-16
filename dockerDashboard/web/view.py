@@ -74,10 +74,10 @@ def host_add(request):
     if convertor.validate_ip(addr):
         index = addr.index(':')
         if DockerHost.objects.filter(ip=addr[:index], port=int(addr[index + 1:])).all():
-            return JsonResponse({'status': 200, 'msg': '禁止添加重复地址！'})
+            return JsonResponse({'status': -1, 'msg': '禁止添加重复地址！'})
         DockerHost(ip=addr[:index], port=int(addr[index + 1:])).save()
         return JsonResponse({'status': 200, 'msg': '添加成功！', 'request': '/host/list'})
-    return JsonResponse({'status': 200, 'msg': '请输入正确的ip:port！'})
+    return JsonResponse({'status': -1, 'msg': '请输入正确的ip:port！'})
 
 
 def __bind_images_id(containers):
