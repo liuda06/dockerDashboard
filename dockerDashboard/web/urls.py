@@ -14,6 +14,7 @@ urlpatterns = patterns('',
                        url(r'^containers/stop/([0-9a-z]*)$', view.container_stop),
                        url(r'^containers/create/$', view.container_create_custom),
                        url(r'^containers/create/([0-9a-z]*)$', view.container_create),
+                       url(r'^containers/shell/$', view.container_create_shell),
                        url(r'^containers/delete/([0-9a-z]*)$', view.container_delete),
                        url(r'^containers/restart/([0-9a-z]*)$', view.container_restart),
                        )

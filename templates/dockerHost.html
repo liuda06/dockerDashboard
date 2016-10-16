@@ -27,7 +27,7 @@
                 </thead>
                 <tbody>
                 {% if not data %}
-                   <td style="width: 100%;" colspan="3"><span style="font-size: 20px;color:silver">没有可用数据...</span></td>
+                   <td style="width: 100%;" colspan="4"><span style="font-size: 20px;color:silver">没有可用数据...</span></td>
                 {% endif %}
                 {% for host in data %}
                     <tr>
@@ -36,7 +36,7 @@
                         <td>{{ host.port }}</td>
                     　　 <td style="width:10%">
                             <a href="/host/delete/{{ host.id }}">删除</a>｜
-                            <a href="#">修改</a>
+{#                            <a href="#">修改</a>#}
                         </td>
                     </tr>
                 {% endfor %}
@@ -45,25 +45,4 @@
         </div>
     </div>
 
-    <script>
-    function test_host(url,reload) {
-        $.ajax({
-          url:url,
-          data:$("#docker_host").serialize(),
-          type:'post',
-          dataType:'json',
-          success:function (data) {
-             if (data.status==200){
-                 alert(data.msg);
-                 if(reload){
-                     window.location.href=data.request
-                 }
-             }
-          },
-            error:function (e) {
-                alert(e)
-            }
-        })
-    }
-    </script>
 {% endblock %}

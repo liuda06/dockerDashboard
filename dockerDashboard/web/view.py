@@ -204,6 +204,22 @@ def container_create_custom(request):
     else:
         return JsonResponse({'status': -1, 'msg': data})
 
+@csrf_exempt
+def container_create_shell(request):
+    server = __default_server(request)
+    shell=request.POST.get('shell')
+
+    if '\n' in shell:shell= shell.replace('\n',' ')
+    if '-H' not in shell:
+        shell= shell.replace('docker','docker -H %s:%d'%(server.ip,server.port))
+    status, output = commands.getstatusoutput(shell)
+    if status == 0:
+        return JsonResponse({'status': 200, 'msg': '创建成功！', 'request': '/containers'})
+    else:
+        return JsonResponse({'status': status, 'msg': output})
+
+
+
 
 def container_delete(request, container):
     server = __default_server(request)
