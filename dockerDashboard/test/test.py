@@ -34,9 +34,30 @@ a='[{"RepoDigests": null,"Created":1466711701,"Size":5042677,"VirtualSize":50426
 a=json.loads(a)
 print a
 
-b=eval(a)
-print b
 
-c={}
-exec('c='+a)
-print c
+a='[{"RepoDigests": null,"Created":1466711701,"Size":5042677,"VirtualSize":5042677,"Labels":null}]'
+# b= eval(a)
+# print b
+
+# a='[{"RepoDigests": null,"Created":1466711701,"Size":5042677,"VirtualSize":5042677,"Labels":null}]'
+# c={}
+# exec('c='+a)
+# print c
+
+##################
+# import commands
+# (status, output) = commands.getstatusoutput('curl http://192.168.137.14:2375/info')
+# print status
+
+
+###################
+# s='1:2'
+# index=s.index(':')
+# print ''
+# print s[:index]
+# print s[index+1:]
+
+###################
+import re
+print re.match(u'^([1-9]|[1-9]\\d{1,3}|[1-6][0-5][0-5][0-3][0-5]|[1-5][0-9][0-9][0-9][0-9])$','23751')
+print re.match(u'((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d))))','0.0.0.0')

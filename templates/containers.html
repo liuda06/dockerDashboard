@@ -36,7 +36,8 @@
                             <a href="/containers/delete/{{ container.Id  }}">删除</a>｜
                             <a href="/containers/start/{{ container.Id }}">启动</a>
                         {% else%}
-                            <a href="/containers/stop/{{ container.Id }}">停止</a>
+                            <a href="/containers/stop/{{ container.Id }}">停止</a> |
+                            <a href="/containers/restart/{{ container.Id }}">重启</a>
                         {% endif %}
 
                         </td>

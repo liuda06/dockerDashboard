@@ -7,6 +7,7 @@
         <ul id="sys_nav" class="nav navbar-nav">
             <li ><a href="/images">镜像列表</a></li>
             <li><a href="/containers">容器列表</a></li>
+            <li><a href="/host/list">docker主机列表</a></li>
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     菜单
@@ -18,12 +19,36 @@
                     <li><a href="/containers">容器列表</a></li>
                 </ul>
             </li>
+           {% if docker_hosts %}
+             <li>
+                    <select id="docker_seleted" class="dropdown-toggle" style="bottom: 0px;" onchange="bind_docker()">
+                        {% for server in docker_hosts %}
+                            {% if  server.selected%}
+                                <option value="{{ server.id}}" selected="{{ server.selected }}">{{ server.ip }}:{{ server.port }}</option>
+                            {% else %}
+                                <option value="{{ server.id}}">{{ server.ip }}:{{ server.port }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </li>
+           {% endif %}
         </ul>
     </div>
     </div>
 </nav>
 <script>
 $(function (){
+{#    if(localStorage.getItem('docker_key')){#}
+{#       select=document.getElementById('docker_seleted')#}
+{#       for(var i=0; i<select.options.length; i++){#}
+{#            if(select.options[i].value == localStorage.getItem('docker_key')){#}
+{#                select.options[i].selected = true;#}
+{#                break;#}
+{#            }#}
+{#        }#}
+{#        localStorage.removeItem('docker_key')#}
+{#    }#}
+    bind_docker(0);
     $('#sys_nav li').click(function (){
         //把之前已有的active去掉
         $('.active').removeClass('active');
@@ -31,4 +56,14 @@ $(function (){
         $(this).addClass("active");
     });
 })
+     function bind_docker(e) {
+        if ($("#docker_seleted").val()){
+            var exp = new Date();
+            exp.setTime(exp.getTime() + 365 * 24 * 60 * 60 * 1000); //3天过期
+            document.cookie="docker_server="+$("#docker_seleted").val()+ ";expires="+ exp.toGMTString()+";path=/";
+            if(e == undefined){
+                window.location.reload()
+            }
+        }
+    }
 </script>

@@ -1,9 +1,22 @@
 import json
 import time
+import re
 
 '''
 utils
 '''
+
+
+def validate_ip(ip_port):
+    if ':' in ip_port:
+        ip = ip_port[:ip_port.index(':')]
+        port = ip_port[ip_port.index(':') + 1:]
+        if re.match(u'^([1-9]|[1-9]\\d{1,3}|[1-6][0-5][0-5][0-3][0-5]|[1-5][0-9][0-9][0-9][0-9])$', port) \
+                and re.match(
+                    u'((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d))))',
+                    ip):
+            return True
+    return False
 
 
 def transfer(s):
@@ -55,9 +68,10 @@ def container_config(image):
              }
     return json.dumps(param)
 
+
 def container_config_custom(request):
-    image=request.GET.get('image')
-    start_rule = request.GET.get('start_rule') #0 1 2 d it dit
+    image = request.GET.get('image')
+    start_rule = request.GET.get('start_rule')  # 0 1 2 d it dit
     host_path = request.GET.get('host_path')
     container_path = request.GET.get('container_path')
     host_port = request.GET.get('host_port')
@@ -65,14 +79,14 @@ def container_config_custom(request):
     cpu = request.GET.get('cpu')
     memery = request.GET.get('memery')
     cmd = request.GET.get('cmd')
-    if start_rule==0:
+    if start_rule == 0:
         param = {'Image': image,
                  'OpenStdin': False,
                  'Tty': False,
                  'StdinOnce': False,
                  'PublishAllPorts': True,
                  }
-    elif start_rule==1:
+    elif start_rule == 1:
         param = {'Image': image,
                  'OpenStdin': True,
                  'Tty': True,
@@ -86,29 +100,24 @@ def container_config_custom(request):
                  'StdinOnce': False,
                  'PublishAllPorts': True,
                  }
-
     if host_port and container_port:
         param['PortBindings'] = {
-            '%s/tcp'%(container_port): [{'HostIp': '', 'HostPort': '%s'%(host_port)}]
+            '%s/tcp' % (container_port): [{'HostIp': '', 'HostPort': '%s' % (host_port)}]
         }
     if host_path and container_path:
-        param['Mounts'] = [
-            {
-                'Source': '%s'%(host_path),
-                'Destination': '%s'%(container_path),
-                'Mode': '',
-                'RW': True,
-                'Propagation': 'rslave'
-            }
-        ]
-
+        # rw/ro default rw
+        param['HostConfig']= {
+            'Binds': [
+                '%s:%s'%(host_path,container_path)
+            ],
+        }
     if memery:
-        param['Memory']=memery
+        param['Memory'] = memery
     if cpu:
-       #  Cpu ==> http://www.open-open.com/news/view/1780c43
-       pass
-
+        #  Cpu ==> http://www.open-open.com/news/view/1780c43
+        pass
     if cmd:
-        param['Cmd']=[cmd]
+        param['Cmd'] = [cmd]
 
     return json.dumps(param)
+
