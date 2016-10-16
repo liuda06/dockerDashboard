@@ -71,12 +71,15 @@ function test_host(url, reload) {
             if (data.status == 200) {
                 alert(data.msg);
                 if (reload) {
-                    window.location.href = data.request
+                    window.location.reload();
                 }
+            }else{
+               alert(data.msg);
             }
         },
         error: function (e) {
-            alert(e)
+            alert("add error...");
+            console.log(e);
         }
     })
 }
