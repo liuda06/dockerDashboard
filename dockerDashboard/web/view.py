@@ -13,9 +13,8 @@ from dockerDashboard.api import docker_api
 from dockerDashboard.utils import convertor
 from dockerDashboard.web.models import DockerHost
 
-
-
 DEFAULT_SERVER = None
+
 
 def docker_hosts(request=None):
     global DEFAULT_SERVER
@@ -43,7 +42,7 @@ def __default_server(request):
     return DEFAULT_SERVER
 
 
-def host_list(reqest):
+def host_list(request):
     return render_to_response('dockerHost.html', {'data': docker_hosts()})
 
 

@@ -48,7 +48,7 @@ function writeCookie(k, v) {
 
 //images
 function create_container(e) {
-    $('#create_image').modal('hide')
+    $('#create_image').modal('hide');
     if (e && e.getAttribute("create_mode") == 0) {
         $.ajax({
             url: '/containers/create/',

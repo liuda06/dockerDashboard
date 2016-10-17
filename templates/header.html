@@ -21,7 +21,7 @@
 {#                </li>#}
                 {% if docker_hosts %}
                     <li>
-                        <select id="docker_seleted" class="dropdown-toggle" style="bottom: 0px;"
+                        <select id="docker_seleted"  class="dropdown-toggle" style="width: 200px;margin-top: 5px;"
                                 onchange="bind_docker()">
                             {% for server in docker_hosts %}
                                 {% if  server.selected %}

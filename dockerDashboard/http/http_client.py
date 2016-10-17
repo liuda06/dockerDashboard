@@ -1,8 +1,10 @@
 # -*- coding: UTF-8 -*-
-import httplib, urllib, json
 
-default_timeout = 3000
+import httplib
+import urllib
 
+
+default_timeout = 5
 
 # urllib.urlencode({}) ==> urllib.quote_plus(str({}))
 
