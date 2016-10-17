@@ -64,7 +64,7 @@ import commands, os
 
 
 ###################
-# shell= os.path.dirname(os.path.dirname(__file__))+'/utils/docker.sh'
+
 # os.system("export DOCKER_HOST='tcp://192.168.137.147:2375'")
 # os.system(shell+" '192.168.137.147:2375' 'docker ps'" )
 # strs='docker \nps'

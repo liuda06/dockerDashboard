@@ -13,8 +13,9 @@ from dockerDashboard.api import docker_api
 from dockerDashboard.utils import convertor
 from dockerDashboard.web.models import DockerHost
 
-DEFAULT_SERVER = None
 
+
+DEFAULT_SERVER = None
 
 def docker_hosts(request=None):
     global DEFAULT_SERVER
@@ -204,22 +205,22 @@ def container_create_custom(request):
     else:
         return JsonResponse({'status': -1, 'msg': data})
 
+
 @csrf_exempt
 def container_create_shell(request):
     server = __default_server(request)
-    shell=request.POST.get('shell')
-    if '-d' not in shell and '-id' not in shell and '-itd' not in shell and '-td' not in shell and '-tid' not in shell:
+    shell = request.POST.get('shell')
+    if '-d' not in shell and '-id' not in shell and '-itd' \
+            not in shell and '-td' not in shell and '-tid' not in shell:
         return JsonResponse({'status': -1, 'msg': '不支持交互模式容器，请使用-d参数！'})
-    if '\n' in shell:shell= shell.replace('\n',' ')
+    if '\n' in shell: shell = shell.replace('\n', ' ')
     if '-H' not in shell:
-        shell= shell.replace('docker','docker -H %s:%d'%(server.ip,server.port))
+        shell = shell.replace('docker', 'docker -H %s:%d' % (server.ip, server.port))
     status, output = commands.getstatusoutput(shell)
     if status == 0:
         return JsonResponse({'status': 200, 'msg': '创建成功！', 'request': '/containers'})
     else:
         return JsonResponse({'status': status, 'msg': output})
-
-
 
 
 def container_delete(request, container):

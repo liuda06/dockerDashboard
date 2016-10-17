@@ -31,6 +31,8 @@
                                 <a disabled="disabled" href="javascript:return false">
                                     <span style="color: red">删除</span>
                                 </a> |
+                            {% elif image.tag == '<none>:<none>' %}
+                                <a href="/images/delete/{{ image.Id }}"><span style="color: green">删除</span></a> |
                             {% else %}
                                 <a href="/images/delete/{{ image.tag }}"><span style="color: green">删除</span></a> |
                             {% endif %}
