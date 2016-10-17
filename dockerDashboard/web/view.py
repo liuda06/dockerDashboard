@@ -148,6 +148,15 @@ def image_delete(request, image):
     return HttpResponseRedirect('/images')
 
 
+def image_pull():
+    server = __default_server(request)
+    http_client.delete_req(
+        host=server.ip, port=server.port,
+        url=docker_api.IMAGES_DELETE % (image))
+    time.sleep(1)
+    return HttpResponseRedirect('/images')
+
+
 def containers(request):
     data = __get_container_all(request)
     for d in data:

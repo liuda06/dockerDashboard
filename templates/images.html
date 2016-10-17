@@ -2,18 +2,16 @@
 {% block title %}镜像列表{% endblock %}
 {% block page_content %}
   <div>
-        <table class="table table-hover table-striped table-bordered">
+        <table class="table table-hover table-striped table-bordered" style="table-layout: fixed;">
             <caption><h3 style="font-weight: 200;color:dodgerblue">docker 镜像</h3></caption>
             <thead>
            <tr class="table-one">
-                  <tr class="table-one">
                     <th width="40px"><input onclick="checkall(this)" type="checkbox" value=""/></th>
                     <th>名称</th>
                     <th>ID</th>
                     <th>创建时间</th>
                     <th>大小</th>
                     <th>操作</th>
-                </tr>
             </tr>
             </thead>
             <tbody>
@@ -22,7 +20,7 @@
                     </td>
                 {% endif %}
                 {% for image in data %}
-                    <tr>
+                    <tr class="table-one">
                         <td><input width="40px" name="sel_chk" type="checkbox" value="{{ image.Id }}"/></td>
                         <td>{{ image.tag }}</td>
                         <td>{{ image.Id }}</td>

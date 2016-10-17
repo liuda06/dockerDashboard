@@ -31,8 +31,8 @@
             <td>{{ host.port }}</td>
             　　
             <td style="width:10%">
-                <a href="/host/delete/{{ host.id }}">删除</a>
-                <a href="#">修改</a>
+                <a href="/host/delete/{{ host.id }}">删除</a> |
+                <a href="#" class="pull_image_class">创建镜像</a>
             </td>
             </tr>
 
@@ -41,4 +41,65 @@
         </table>
     </div>
 
+
+      <div class="modal fade" id="pull_image" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">拉取镜像</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div id="myTabContent" class="tab-content">
+                        <div >
+                            <label>运行docker pull image操作即可</label>
+                            <textarea id="pull_shell" class="form-control" style="width: 95%"></textarea>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" id="create_btn" create_mode="0" onclick="create_container(this)" class="btn btn-primary">提交</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+<script>
+$(function(){
+    $(".pull_image_class").click(function () {
+        $('#pull_image').modal({
+            keyboard: true
+        })
+    })
+})
+
+function create_container(e) {
+    $('#create_image').modal('hide');
+    if (e && e.getAttribute("create_mode") == 0) {
+        $.ajax({
+            url: '/images/pull/',
+            data: $("#pull_shell").val(),
+            type: 'get',
+            dataType: 'json',
+            success: function (data) {
+                if (data.status == 200) {
+                    alert(data.msg);
+                    window.location.href = data.request
+                } else {
+                    alert(data.msg)
+                }
+            },
+            error: function (e) {
+                console.log(e)
+                alert('server error...')
+            }
+        })
+    }else{
+       return create_container_shell()
+    }
+}
+</script>
 {% endblock %}

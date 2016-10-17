@@ -16,6 +16,7 @@ IMAGES_BUILD = '/build'  # POST /build   (param is a tar file include Dockerfile
 IMAGES_DELETE = '/images/%s'  # DELETE /images/(name)
 IMAGES_CREATE = '/commit'  # POST /commit?container=44c004db4b17&m=message&repo=myrepo
 IMAGES_PUSH='/images/%s/push' #POST /images/(name)/push
+IMAGES_PULL='/images/create' #POST /images/create?fromImage=base
 IMAGES_INFO='/images/%s/history' #GET /images/(name)/history
 IMAGES_INSPECT='/images/%s/json' #GET /images/(name)/json
 IMAGES_INSERT='/images/%s/insert' #POST /images/(name)/insert?path=/usr&url=myurl
