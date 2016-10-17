@@ -3,23 +3,19 @@
  */
 
 $(function () {
-    bind_docker(0);
-    $('#sys_nav li').click(function () {
-        $('.active').removeClass('active');
-        localStorage.setItem('nav', this.getAttribute('index'))
+    var addr=variable_win.protocol+"//"+variable_win.host;
+    var current=variable_win.uri().substring(addr.length,variable_win.uri().length);
+    $(".navbar-header a").each(function(){
+         if(current=="/"){
+           $(".navbar-header").children("a").first().addClass("active");
+             return;
+         }
+         if (this.getAttribute('href') == current) {
+                $(this).attr("style","color: white")
+                return;
+         }
     });
-    var index = localStorage.getItem('nav')
-    if (index == undefined || index == 'null' || index <= 0 || index > 3) {
-        $("#sys_nav").children("li").first().addClass("active");
-    } else {
-        $("#sys_nav li").each(function () {
-            if (this.getAttribute('index') == index) {
-                $(this).addClass('active')
-                return
-            }
-        })
-    }
-
+    bind_docker(0);
     $(".create_container").click(function () {
         $("#image_id").val(this.id)
         $('#create_image').modal({
@@ -99,6 +95,10 @@ function create_container_shell() {
 
 //docker host
 function test_host(url, reload) {
+    if($("#ip_addr").val()==""){
+        alert("地址不能为空.")
+        return false;
+    }
     $.ajax({
         url: url,
         data: {ip_addr:$("#ip_addr").val()},
