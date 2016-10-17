@@ -68,8 +68,9 @@ function create_container(e) {
                 alert('server error...')
             }
         })
+    }else{
+       return create_container_shell()
     }
-    return create_container_shell()
 }
 
 function create_container_shell() {
