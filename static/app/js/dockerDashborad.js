@@ -101,7 +101,7 @@ function create_container_shell() {
 function test_host(url, reload) {
     $.ajax({
         url: url,
-        data: $("#docker_host").serialize(),
+        data: {ip_addr:$("#ip_addr").val()},
         type: 'post',
         dataType: 'json',
         success: function (data) {

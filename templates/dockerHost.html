@@ -1,48 +1,44 @@
 {% extends 'base.html' %}
 {% block title %}docker 主机列表{% endblock %}
 {% block page_content %}
-  <nav class="navbar navbar-default" role="navigation">
-	<div class="container-fluid">
-        <form id="docker_host" class="form-inline" action="" method="POST">
-        <div class="form-group">
-            <label style="font-size: large">http:</label>
-            <input type="text" name="ip_addr" class="form-control" value="" placeholder="127.0.0.1:2375">
-            <input class="btn btn-sm btn-info" style="width:30px" onclick="test_host('/host/test/')" value="测试"/>
-            <input class="btn btn-sm btn-danger" style="width:30px" onclick="test_host('/host/add/',true)" value="添加"/>
-        </div>
-</form>
-	</div>
-  </nav>
 
-    <div class="fade-in-up ng-scope">
-        <div id="myTabContent" class="tab-content cup-content">
-            <table class="one"  width="100%">
-                <thead>
-                <tr class="table-one" style="border: 1px">
+    <div>
+        <table class="table table-hover table-striped table-bordered">
+            <caption><h3 style="font-weight: 200;color:dodgerblue">列表</h3></caption>
+            <thead>
+           <tr class="table-one">
                     <th width="40px"><input onclick="checkall(this)" type="checkbox" value=""/></th>
-                    <th >主机地址</th>
-                    <th>端口</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% if not data %}
-                   <td style="width: 100%;" colspan="4"><span style="font-size: 20px;color:silver">没有可用数据...</span></td>
-                {% endif %}
-                {% for host in data %}
+                <th width="30%" >
+                    主机地址
+                </th>
+                <th width="30%" >
+                    服务端口
+                </th>
+                <th width="40%" >
+                    操作
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for host in data %}
+                {% if host.id  == 0 %}
+                    <tr class="success">#}
+                        {% else %}
                     <tr>
-                        <td><input width="40px" name="sel_chk" type="checkbox" value="{{ container.Id }}"/></td>
-                        <td>{{ host.ip }}</td>
-                        <td>{{ host.port }}</td>
-                    　　 <td style="width:10%">
-                            <a href="/host/delete/{{ host.id }}">删除</a>
-{#                            <a href="#">修改</a>#}
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
+                {% endif %}
+            <td><input width="40px" name="sel_chk" type="checkbox" value="{{ container.Id }}"/></td>
+            <td>{{ host.ip }}</td>
+            <td>{{ host.port }}</td>
+            　　
+            <td style="width:10%">
+                <a href="/host/delete/{{ host.id }}">删除</a>
+                <a href="#">修改</a>
+            </td>
+            </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 
 {% endblock %}

@@ -51,3 +51,12 @@ position: absolute;
     overflow: hidden;
     z-index: 2;
 }
+.navbar{
+    margin-bottom: 20px;
+    overflow: visible;
+    float: left;
+}
+
+.table-one th{
+    text-align: center;
+}

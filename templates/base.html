@@ -9,38 +9,19 @@
 
     <title>{% block title %}docker Dashboard{% endblock %}</title>
     <link href="/static/app/css/base.css" rel="stylesheet" type="text/css"/>
-    <link href="/static/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="http://cdn.bootcss.com/bootstrap/3.0.1/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <script src="/static/lib/jquery.min.js"></script>
-    <script src="/static/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.0.1/js/bootstrap.min.js"></script>
     <script src="/static/app/js/dockerDashborad.js"></script>
 </head>
 <body >
-    <div >
-        {% include "header.html" %}
-    </div>
-
-    <div class="page-container">
-        <div class="page-sidebar-wrapper">
-            {% include "menu.html" %}
-        </div>
-        <div class="page-content-wrapper">
-            <div id="mainContainer" class="page-content">
+   <div class="container">
+	{% include "header.html" %}
+     <div id="mainContainer" class="page-content" style="margin-top: 51px">
                 {% block page_content %}
                 {% endblock %}
-            </div>
-        </div>
-    </div>
-
-    {% include "footer.html" %}
-{#    <div class="modal fade" id="loadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">#}
-{#        <div class="modal-dialog" style="width:280px;">#}
-{#            <div class="modal-content">#}
-{#                <div id="loadBody" class="modal-body">#}
-{#                    <div id="loadDialog"></div>#}
-{#                    <h6>数据加载中...</h6>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
+     </div>
+</div>
+</div>
 </body>
 </html>

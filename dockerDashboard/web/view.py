@@ -43,7 +43,7 @@ def __default_server(request):
 
 
 def host_list(request):
-    return render_to_response('dockerHost.html', {'data': docker_hosts()})
+    return render_to_response('dockerHost.html', {'data': docker_hosts(),'show_host':True})
 
 
 def host_delete(request, host_id):

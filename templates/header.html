@@ -1,40 +1,22 @@
-{#<div id="topbar" >#}
-{#<a href="/images">镜像列表</a> | <a href="/containers">容器列表</a>#}
-{#</div>#}
-<nav class="navbar navbar-default" role="navigation">
-    <div class="container-fluid">
-        <div>
-            <ul id="sys_nav" class="nav navbar-nav">
-                <li index="1"><a href="/images">镜像列表</a></li>
-                <li index="2"><a href="/containers">容器列表</a></li>
-                <li index="3"><a href="/host/list">docker主机列表</a></li>
-{#                <li class="dropdown">#}
-{#                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">#}
-{#                        菜单#}
-{#                        <b class="caret"></b>#}
-{#                    </a>#}
-{#                    <ul class="dropdown-menu">#}
-{#                        <li><a href="/images">镜像列表</a></li>#}
-{#                        <li class="divider"></li>#}
-{#                        <li><a href="/containers">容器列表</a></li>#}
-{#                    </ul>#}
-{#                </li>#}
-                {% if docker_hosts %}
-                    <li>
-                        <select id="docker_seleted"  class="dropdown-toggle" style="width: 200px;margin-top: 5px;"
-                                onchange="bind_docker()">
-                            {% for server in docker_hosts %}
-                                {% if  server.selected %}
-                                    <option value="{{ server.id }}"
-                                            selected="{{ server.selected }}">{{ server.ip }}:{{ server.port }}</option>
-                                {% else %}
-                                    <option value="{{ server.id }}">{{ server.ip }}:{{ server.port }}</option>
-                                {% endif %}
-                            {% endfor %}
-                        </select>
-                    </li>
-                {% endif %}
-            </ul>
+<div class="row clearfix">
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/images">镜像</a>
+            <a class="navbar-brand" href="/containers">容器</a>
+            <a class="navbar-brand" href="/host/list">docker主机</a>
         </div>
-    </div>
-</nav>
+
+        {% if show_host %}
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <div class="navbar-form navbar-left" role="search">
+                    <label style="color: white">主机地址:</label>
+                    <div class="form-group">
+                        <input type="text" id="ip_addr" name="ip_addr" placeholder="127.0.0.1:2375" class="form-control"/>
+                    </div>
+                    <button type="submit" onclick="test_host('/host/test/')" class="btn btn-default">测试</button>
+                    <button type="submit" onclick="test_host('/host/add/',true)" class="btn btn-default">保存</button>
+                </div>
+            </div>
+        {% endif %}
+    </nav>
+</div>

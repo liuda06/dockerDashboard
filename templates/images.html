@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 {% block title %}镜像列表{% endblock %}
 {% block page_content %}
-    <div class="fade-in-up ng-scope">
-        <div id="myTabContent" class="tab-content cup-content">
-            <table class="one" width="100%">
-                <thead>
-                <tr class="table-one">
+  <div>
+        <table class="table table-hover table-striped table-bordered">
+            <caption><h3 style="font-weight: 200;color:dodgerblue">列表</h3></caption>
+            <thead>
+           <tr class="table-one">
+                  <tr class="table-one">
                     <th width="40px"><input onclick="checkall(this)" type="checkbox" value=""/></th>
                     <th>名称</th>
                     <th>ID</th>
@@ -13,9 +14,10 @@
                     <th>大小</th>
                     <th>操作</th>
                 </tr>
-                </thead>
-                <tbody>
-                {% if not data %}
+            </tr>
+            </thead>
+            <tbody>
+           {% if not data %}
                     <td style="width: 100%;" colspan="6"><span style="font-size: 20px;color:silver">没有可用数据...</span>
                     </td>
                 {% endif %}
@@ -42,11 +44,9 @@
                         </td>
                     </tr>
                 {% endfor %}
-                </tbody>
-            </table>
-        </div>
+            </tbody>
+        </table>
     </div>
-
     <!-- 模态框（Modal） -->
     <div class="modal fade" id="create_image" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">

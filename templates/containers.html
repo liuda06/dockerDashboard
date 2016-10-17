@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 {% block title %}容器列表{% endblock %}
 {% block page_content %}
-    <div class="fade-in-up ng-scope">
-        <div id="myTabContent" class="tab-content cup-content">
-            <table class="one"  width="100%">
-                <thead>
-                <tr class="table-one">
+
+    <div>
+        <table class="table table-hover table-striped table-bordered" style="table-layout: fixed;">
+            <caption><h3 style="font-weight: 200;color:dodgerblue">列表</h3></caption>
+            <thead>
+             <tr class="table-one">
                     <th width="40px"><input onclick="checkall(this)" type="checkbox" value=""/></th>
                     <th >ID</th>
                     <th>IMAGE</th>
@@ -16,15 +17,15 @@
                     <th >NAMES</th>
                     <th>操作</th>
                 </tr>
-                </thead>
-                <tbody>
-                {% if not data %}
+            </thead>
+            <tbody>
+           {% if not data %}
                    <td style="width: 100%;" colspan="9"><span style="font-size: 20px;color:silver">没有可用数据...</span></td>
                 {% endif %}
                 {% for container in data %}
                     <tr>
                         <td><input width="40px" name="sel_chk" type="checkbox" value="{{ container.Id }}"/></td>
-                        <td>{{ container.Id }}</td>
+                        <td >{{ container.Id }}</td>
                         <td>{{ container.Image }}</td>
                         <td>{{ container.Command }}</td>
                         <td>{{ container.Created }}</td>
@@ -44,7 +45,8 @@
                     </tr>
                 {% endfor %}
                 </tbody>
-            </table>
-        </div>
+            </tbody>
+        </table>
     </div>
+
 {% endblock %}
