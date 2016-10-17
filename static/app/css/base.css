@@ -3,6 +3,25 @@ table.one {
     table-layout: fixed;
 }
 
+label{
+    padding: 4px 10px;
+}
+
+label.sr-only {
+    float: left;
+    width: 50px;
+    margin: 0;
+}
+
+div.col-sm-10 {
+    margin-bottom: 10px;
+}
+
+.checkbox-inline input[type='radio'] {
+    vertical-align: bottom;
+    margin-bottom: 3px;
+}
+
 td {
     font-size: 9px;
     width: 20px;
