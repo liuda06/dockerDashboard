@@ -28,7 +28,7 @@
                         <td>{{ image.Size }}</td>
                         <td style="width:10%">
                             {% if image.used %}
-                                <a disabled="disabled" href="javascript:return false">
+                                <a disabled="disabled" href="#">
                                     <span style="color: red">删除</span>
                                 </a> |
                             {% elif image.tag == '<none>:<none>' %}
@@ -70,10 +70,10 @@
                     </ul>
                     <div id="myTabContent" class="tab-content">
                         <div class="tab-pane fade in active" id="home">
-                            <form class="form-inline" role="form" id="container_form">
+                            <form class="form-horizontal" role="form" id="container_form">
                                 <input type="hidden" name="image" id="image_id">
-                                <div>
-                                    <label for="name" style="padding:10px;">启动方式</label> &nbsp;&nbsp;
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">启动方式</label>
                                     <label class="checkbox-inline">
                                         <input name="start_rule" type="radio" id="inlineCheckbox1" value="0">守护式&nbsp;
                                     </label>
@@ -85,42 +85,47 @@
                                                value="2">后台守护式
                                     </label>
                                 </div>
-                                <div class="form-group">
-                                    <label class="sr-only" for="name">数据卷</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" name="host_path" class="form-control" id="name"
-                                               placeholder="host path">&nbsp;&nbsp;
-                                        <input type="text" name="container_path" class="form-control" id="name"
+
+                                	<div class="form-group ">
+                                        <label class="col-sm-2 control-label">数据卷</label>
+                                        <div class="col-sm-4">
+                                             <input type="text" name="host_path" class="form-control" id="name"
+                                               placeholder="host path">
+                                        </div>
+                                        <div class="col-sm-4">
+                                           <input type="text" name="container_path" class="form-control" id="name"
                                                placeholder="container path">
+                                        </div>
                                     </div>
-                                </div>
                                 <div class="form-group">
-                                    <label class="sr-only" for="name">端口</label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-2 control-label">端口</label>
+                                    <div class="col-sm-3">
                                         <input type="text" name="host_port" class="form-control" id="name"
-                                               placeholder="host port">&nbsp;&nbsp;
+                                               placeholder="host port">
+                                        </div>
+                                        <div class="col-sm-3">
                                         <input type="text" name="container_port" class="form-control" id="name"
                                                placeholder="container port">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="sr-only" for="name">CPU</label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-2 control-label">CPU</label>
+                                    <div class="col-sm-3">
                                         <input type="text" name="cpu" class="form-control" id="name"
-                                               placeholder="cpu 数量">&nbsp;&nbsp;
+                                               placeholder="cpu 数量">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="sr-only" for="name">内存</label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-2 control-label">内存</label>
+                                    <div class="col-sm-3">
                                         <input type="text" name="memery" class="form-control" id="name"
-                                               placeholder="内存限制">&nbsp;&nbsp;
+                                               placeholder="内存限制">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="sr-only" for="name" style="padding:10px">CMD</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" name="cmd" class="form-control" id="name" placeholder="指令">&nbsp;&nbsp;
+                                    <label class="col-sm-2 control-label" style="padding:10px">CMD</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="cmd" class="form-control" id="name" placeholder="指令">
                                     </div>
                                 </div>
                             </form>

@@ -6,6 +6,10 @@ $(function () {
     var addr=variable_win.protocol+"//"+variable_win.host;
     var current=variable_win.uri().substring(addr.length,variable_win.uri().length);
 
+    if (current.substring(current.length-1,current.length)=="#"){
+        current=current.substring(0,current.length-1);
+    }
+
     $(".pagination li a ").each(function () {
             var href=this.getAttribute('href');
             if (href !=null){
