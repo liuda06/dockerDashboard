@@ -5,8 +5,12 @@
 
 ##run
 ```
-python manage.py  makemigrations &&\
-  python manage.py migrate
-
 python manage.py runserver
+
 ```
+##docker主机配置
+![king-aric](https://github.com/king-aric/dockerDashboard/blob/master/misc/host.png) 
+##docker镜像
+![king-aric](https://github.com/king-aric/dockerDashboard/blob/master/misc/image.png) 
+##docker容器
+![king-aric](https://github.com/king-aric/dockerDashboard/blob/master/misc/container.png) 
