@@ -53,3 +53,12 @@ def delete_image():
 
 
 # create_container(param)
+# def pull():
+#     import threading
+#     def pull_request():
+#         print http_client.post_req(
+#         host='127.0.0.1', port=2375,timeout=60,headers={},
+#         body=None, url=docker_api.IMAGES_PULL% ("kingaric/2048"))
+#     threading.Thread(target=pull_request).start()
+#     print 123
+# pull()

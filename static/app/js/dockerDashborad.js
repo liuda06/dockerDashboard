@@ -5,6 +5,14 @@
 $(function () {
     var addr=variable_win.protocol+"//"+variable_win.host;
     var current=variable_win.uri().substring(addr.length,variable_win.uri().length);
+
+    $(".pagination li a ").each(function () {
+            var href=this.getAttribute('href');
+            if (href !=null){
+                $(this).attr('href',current+'?page='+href);
+            }
+     });
+
     $(".navbar-header a").each(function(){
          if(current=="/"){
            $(".navbar-header").children("a").first().addClass("active");

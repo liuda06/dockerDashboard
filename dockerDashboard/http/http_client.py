@@ -39,8 +39,10 @@ def post_req(**kwargs):
     http_client = None
     data = None
     try:
+        timeout=default_timeout
+        if kwargs.get('timeout'):timeout= kwargs.get('timeout')
         http_client = httplib.HTTPConnection(
-            kwargs.get('host'), kwargs.get('port'), timeout=default_timeout)
+            kwargs.get('host'), kwargs.get('port'), timeout=timeout)
         http_client.request(
             method='POST', url=kwargs.get('url'), body=kwargs.get('body'), headers=kwargs.get('headers'))
         response = http_client.getresponse()

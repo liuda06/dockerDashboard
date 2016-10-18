@@ -23,6 +23,9 @@ def transfer(s):
     return json.loads(s)
 
 
+def transfer_reverse(s):
+    return json.dumps(s)
+
 def time_to_str(t):
     t = time.localtime(t)
     return time.strftime('%Y-%m-%d %H:%M:%S', t)

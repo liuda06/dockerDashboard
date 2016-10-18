@@ -2,6 +2,7 @@
 import time
 import copy
 import commands
+import threading
 
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
@@ -12,6 +13,7 @@ from dockerDashboard.http import http_client
 from dockerDashboard.api import docker_api
 from dockerDashboard.utils import convertor
 from dockerDashboard.web.models import DockerHost
+from dockerDashboard.utils.page import pagination
 
 DEFAULT_SERVER = None
 
@@ -43,7 +45,8 @@ def __default_server(request):
 
 
 def host_list(request):
-    return render_to_response('dockerHost.html', {'data': docker_hosts(),'show_host':True})
+    data, range = pagination(request, docker_hosts())
+    return render_to_response('dockerHost.html', {'data':data,'page_range':range, 'show_host': True})
 
 
 def host_delete(request, host_id):
@@ -134,9 +137,9 @@ def images(request):
             if index > 0: temp['used'] = False
             image_list.append(temp)
             index += 1
-
+    data,range = pagination(request,image_list)
     return render_to_response('images.html',
-                              {'data': image_list, 'docker_hosts': docker_hosts(request)})
+                              {'data': data,'page_range':range, 'docker_hosts': docker_hosts(request)})
 
 
 def image_delete(request, image):
@@ -148,13 +151,17 @@ def image_delete(request, image):
     return HttpResponseRedirect('/images')
 
 
-def image_pull():
+def image_pull(request):
+    image = request.GET.get('image')
     server = __default_server(request)
-    http_client.delete_req(
-        host=server.ip, port=server.port,
-        url=docker_api.IMAGES_DELETE % (image))
-    time.sleep(1)
-    return HttpResponseRedirect('/images')
+    def pull_request():
+        http_client.post_req(
+            host=server.ip, port=server.port, timeout=60 * 30,
+            headers={'Content-type': 'application/json'},
+            body=None, url=docker_api.IMAGES_PULL % (image))
+
+    threading.Thread(target=pull_request).start()
+    return JsonResponse({'status': 200, 'msg': '提示：\n创建中！\n后台默认处理30分钟,超时即失败.', 'request': '/images/'})
 
 
 def containers(request):
@@ -164,8 +171,9 @@ def containers(request):
         d['Size'] = convertor.size_format(d.get('Size'))
         d['Ports'] = convertor.port_str(d.get('Ports'))
 
+    data, range = pagination(request, data)
     return render_to_response('containers.html',
-                              {'data': data, 'docker_hosts': docker_hosts(request)})
+                              {'data': data,'page_range':range, 'docker_hosts': docker_hosts(request)})
 
 
 def container_start(request, container):
