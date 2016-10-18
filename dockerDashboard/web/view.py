@@ -22,6 +22,7 @@ def docker_hosts(request=None):
     global DEFAULT_SERVER
     data = DockerHost.objects.all()
     if len(data) <= 0:
+        DEFAULT_SERVER = None
         return []
     if request:
         server = request.COOKIES.get('docker_server')
