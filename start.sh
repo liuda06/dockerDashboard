@@ -7,7 +7,7 @@ start_server(){
   then
     mkdir ~/log
   fi  
-  sudo python manage.py runserver 0.0.0.0:10086 >~/log/dockerdashboard 2>&1&
+  sudo python manage.py runserver  0.0.0.0:10086 --insecure >~/log/dockerdashboard 2>&1&
 }
 start_server
 

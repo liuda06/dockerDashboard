@@ -1,8 +1,9 @@
 from django.conf.urls import patterns, url
 from dockerDashboard.web import view
+from dockerDashboard.utils import error
 
 urlpatterns = patterns('',
-                       url(r'^$', view.images),  # default url
+                       url(r'^$', view.host_list),  # default url
                        url(r'^images/$', view.images),
                        url(r'^images/pull/$',view.image_pull),
                        url(r'^images/delete/([0-9a-z_:/.-]*)$', view.image_delete),
@@ -19,3 +20,6 @@ urlpatterns = patterns('',
                        url(r'^containers/delete/([0-9a-z]*)$', view.container_delete),
                        url(r'^containers/restart/([0-9a-z]*)$', view.container_restart),
                        )
+
+handler404 = error.system_404
+handler500 = error.system_500
