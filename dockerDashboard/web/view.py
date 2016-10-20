@@ -46,8 +46,8 @@ def __default_server(request):
 
 
 def host_list(request):
-    data, range = pagination(request, docker_hosts())
-    return render_to_response('dockerHost.html', {'data':data,'page_range':range, 'show_host': True})
+    data, range, start_index = pagination(request, docker_hosts())
+    return render_to_response('dockerHost.html', {'data':data,'page_range':range,'start_index':start_index, 'show_host': True})
 
 
 def host_delete(request, host_id):
@@ -138,9 +138,9 @@ def images(request):
             if index > 0: temp['used'] = False
             image_list.append(temp)
             index += 1
-    data,range = pagination(request,image_list)
+    data,range, start_index= pagination(request,image_list)
     return render_to_response('images.html',
-                              {'data': data,'page_range':range, 'docker_hosts': docker_hosts(request)})
+                              {'data': data,'page_range':range,'start_index':start_index, 'docker_hosts': docker_hosts(request)})
 
 
 def image_delete(request, image):
@@ -172,9 +172,9 @@ def containers(request):
         d['Size'] = convertor.size_format(d.get('Size'))
         d['Ports'] = convertor.port_str(d.get('Ports'))
 
-    data, range = pagination(request, data)
+    data, range ,start_index= pagination(request, data)
     return render_to_response('containers.html',
-                              {'data': data,'page_range':range, 'docker_hosts': docker_hosts(request)})
+                              {'data': data,'page_range':range,'start_index':start_index, 'docker_hosts': docker_hosts(request)})
 
 
 def container_start(request, container):

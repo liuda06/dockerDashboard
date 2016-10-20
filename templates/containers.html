@@ -6,7 +6,7 @@
             <caption><h3 style="font-weight: 200;color:dodgerblue">docker 容器</h3></caption>
             <thead>
             <tr class="table-one">
-                <th width="40px"><input onclick="checkall(this)" type="checkbox" value=""/></th>
+                <th width="6%">编号</th>
                 <th>ID</th>
                 <th>IMAGE</th>
                 <th>COMMAND</th>
@@ -23,7 +23,7 @@
             {% endif %}
             {% for container in data %}
                 <tr>
-                    <td><input width="40px" name="sel_chk" type="checkbox" value="{{ container.Id }}"/></td>
+                    <td>{{ forloop.counter|add:start_index }}</td>
                     <td>{{ container.Id }}</td>
                     <td>{{ container.Image }}</td>
                     <td>{{ container.Command }}</td>

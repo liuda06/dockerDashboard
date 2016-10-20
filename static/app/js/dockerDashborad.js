@@ -33,7 +33,12 @@ $(function () {
         $('#create_image').modal({
             keyboard: true
         })
-    })
+    });
+     $(".pull_image_class").click(function () {
+                $('#pull_image').modal({
+                    keyboard: true
+                })
+     });
 });
 
 
@@ -132,3 +137,24 @@ function test_host(url, reload) {
         }
     })
 }
+function create_image(e) {
+            $('#pull_image').modal('hide');
+            $.ajax({
+                url: '/images/pull/',
+                data: {image: $("#image_name").val()},
+                type: 'get',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status == 200) {
+                        alert(data.msg);
+                        window.location.href = data.request
+                    } else {
+                        alert(data.msg)
+                    }
+                },
+                error: function (e) {
+                    console.log(e)
+                    alert('server error...')
+                }
+            })
+        }
