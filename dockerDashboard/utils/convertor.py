@@ -115,10 +115,10 @@ def container_config_custom(request):
             ],
         }
     if memery:
-        param['Memory'] = memery
-    if cpu:
-        #  Cpu ==> http://www.open-open.com/news/view/1780c43
-        pass
+        param['Memory'] = int(memery)*1024*1024
+    if cpu: #  Cpu ==> http://www.open-open.com/news/view/1780c43
+        param['CpuPeriod'] = 100000
+        param['CpuQuota']  = 10000* int(float(cpu)*10)
     if cmd:
         param['Cmd'] = [cmd]
 
