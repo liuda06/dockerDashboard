@@ -145,7 +145,8 @@ def images(request):
             index += 1
     data,range, start_index= pagination(request,image_list)
     return render_to_response('images.html',
-                              {'data': data,'page_range':range,'start_index':start_index, 'docker_hosts': docker_hosts(request)})
+                              {'data': data,'page_range':range,'start_index':start_index,
+                               'docker_hosts': docker_hosts(request)})
 
 
 def image_delete(request, image):
@@ -167,7 +168,9 @@ def image_pull(request):
             body=None, url=docker_api.IMAGES_PULL % (image))
 
     threading.Thread(target=pull_request).start()
-    return JsonResponse({'status': 200, 'msg': '提示：\n创建中！\n后台默认处理30分钟,超时即失败.', 'request': '/images/'})
+    return JsonResponse({'status': 200,
+                         'msg': '提示：\n创建中！\n后台默认处理30分钟,超时即失败.',
+                         'request': '/images/'})
 
 
 def containers(request):
@@ -179,7 +182,8 @@ def containers(request):
 
     data, range ,start_index= pagination(request, data)
     return render_to_response('containers.html',
-                              {'data': data,'page_range':range,'start_index':start_index, 'docker_hosts': docker_hosts(request)})
+                              {'data': data,'page_range':range,'start_index':start_index,
+                               'docker_hosts': docker_hosts(request)})
 
 
 def container_start(request, container):
@@ -209,8 +213,6 @@ def container_create(request, image):
 
     return HttpResponseRedirect('/containers')
 
-
-# todo bug: the vlume and ports is not together used
 def container_create_custom(request):
     """
     Status Codes:   201 – no error
