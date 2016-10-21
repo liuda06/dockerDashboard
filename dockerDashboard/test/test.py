@@ -73,3 +73,24 @@ import commands, os
 #     strs= strs.replace('docker','docker -H 192.168.137.147:2375')
 # print strs
 # print  commands.getstatusoutput(strs)
+param={}
+param['HostConfig']= {
+            'Binds': [
+                '%s:%s'%('opt','aa')
+            ],
+        }
+if param.get('HostConfig'):
+    data=param.get('HostConfig')
+    data['PortBindings']={
+                '%s/tcp' % (80): [{'HostIp': '', 'HostPort': '%s' % (9000)}]
+                 }
+    param['HostConfig']=data
+else:
+    param['HostConfig'] = {
+                'PortBindings': {
+                '%s/tcp' % (80): [{'HostIp': '', 'HostPort': '%s' % (9000)}]
+                 }
+            }
+
+
+print param

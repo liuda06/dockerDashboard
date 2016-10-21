@@ -9,23 +9,20 @@ param = {'Image': '7a',
          'OpenStdin': True,  # Keep STDIN open even if not attached -i
          'Tty': True,  # Allocate a pseudo-TTY -t
          'StdinOnce': False,  # StdinOnce':False== -d=true
-
          'PublishAllPorts': True,
          'HostConfig': {
              'Binds': [
                  '/opt:/opt/app',
                  '/vol:/vol/app:ro'
              ],
-         },
-         'PortBindings': {
-             '80/tcp': [{'HostIp': '', 'HostPort': '8085'}]
-         },
-         'NetworkSettings': {
-             'NetworkMode': 'bridge',
+             'PortBindings': {
+                 '80/tcp': [{'HostIp': '', 'HostPort': '8085'}]
+             }
          },
 
-}
+         }
 param = json.dumps(param)
+
 print param
 
 
@@ -52,13 +49,13 @@ def delete_image():
         url=docker_api.IMAGES_DELETE % ('fdbfd7bf9'))
 
 
-# create_container(param)
+create_container(param)
 # def pull():
 #     import threading
 #     def pull_request():
 #         print http_client.post_req(
 #         host='127.0.0.1', port=2375,timeout=60,headers={},
-#         body=None, url=docker_api.IMAGES_PULL% ("kingaric/2048"))
+#         body=None, url=docker_api.IMAGES_PULL% ('kingaric/2048'))
 #     threading.Thread(target=pull_request).start()
 #     print 123
 # pull()

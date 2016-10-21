@@ -26,6 +26,7 @@ def transfer(s):
 def transfer_reverse(s):
     return json.dumps(s)
 
+
 def time_to_str(t):
     t = time.localtime(t)
     return time.strftime('%Y-%m-%d %H:%M:%S', t)
@@ -103,24 +104,32 @@ def container_config_custom(request):
                  'StdinOnce': False,
                  'PublishAllPorts': True,
                  }
-    if host_port and container_port:
-        param['PortBindings'] = {
-            '%s/tcp' % (container_port): [{'HostIp': '', 'HostPort': '%s' % (host_port)}]
-        }
     if host_path and container_path:
-        # rw/ro default rw
-        param['HostConfig']= {
+        # /opt:/opt/app:ro
+        param['HostConfig'] = {
             'Binds': [
-                '%s:%s'%(host_path,container_path)
+                '%s:%s' % (host_path, container_path)
             ],
         }
+    if host_port and container_port:
+        if param.get('HostConfig'):
+            data = param.get('HostConfig')
+            data['PortBindings'] = {
+                '%s/tcp' % (container_port): [{'HostIp': '', 'HostPort': '%s' % (host_port)}]
+            }
+            param['HostConfig'] = data
+        else:
+            param['HostConfig'] = {
+                'PortBindings': {
+                    '%s/tcp' % (container_port): [{'HostIp': '', 'HostPort': '%s' % (host_port)}]
+                }
+            }
     if memery:
-        param['Memory'] = int(memery)*1024*1024
-    if cpu: #  Cpu ==> http://www.open-open.com/news/view/1780c43
+        param['Memory'] = int(memery) * 1024 * 1024
+    if cpu:  # Cpu ==> http://www.open-open.com/news/view/1780c43
         param['CpuPeriod'] = 100000
-        param['CpuQuota']  = 10000* int(float(cpu)*10)
+        param['CpuQuota'] = 10000 * int(float(cpu) * 10)
     if cmd:
         param['Cmd'] = [cmd]
 
     return json.dumps(param)
-
