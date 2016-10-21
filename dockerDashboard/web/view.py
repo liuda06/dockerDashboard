@@ -3,6 +3,7 @@ import time
 import copy
 import commands
 import threading
+import platform
 
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
@@ -47,7 +48,9 @@ def __default_server(request):
 
 def host_list(request):
     data, range, start_index = pagination(request, docker_hosts())
-    return render_to_response('dockerHost.html', {'data':data,'page_range':range,'start_index':start_index, 'show_host': True})
+    return render_to_response('dockerHost.html',
+                              {'data':data,'page_range':range,
+                               'start_index':start_index, 'show_host': True})
 
 
 def host_delete(request, host_id):
@@ -61,6 +64,8 @@ def host_delete(request, host_id):
 
 @csrf_exempt
 def host_test(request):
+    if platform.system() == 'Windows':
+        return JsonResponse({'status': 200, 'msg': '该功能不支持Windows系统！'})
     addr = request.POST.get('ip_addr')
     if not convertor.validate_ip(addr):
         return JsonResponse({'status': 200, 'msg': '请输入正确的ip:port！'})
