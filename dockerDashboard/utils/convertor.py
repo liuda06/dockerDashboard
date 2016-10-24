@@ -83,12 +83,14 @@ def container_config_custom(request):
     cpu = request.GET.get('cpu')
     memery = request.GET.get('memery')
     cmd = request.GET.get('cmd')
+    data={}
     if start_rule == 0:
         param = {'Image': image,
                  'OpenStdin': False,
                  'Tty': False,
                  'StdinOnce': False,
                  'PublishAllPorts': True,
+                 'HostConfig':data
                  }
     elif start_rule == 1:
         param = {'Image': image,
@@ -96,6 +98,7 @@ def container_config_custom(request):
                  'Tty': True,
                  'StdinOnce': True,
                  'PublishAllPorts': True,
+                 'HostConfig': data
                  }
     else:
         param = {'Image': image,
@@ -103,32 +106,26 @@ def container_config_custom(request):
                  'Tty': True,
                  'StdinOnce': False,
                  'PublishAllPorts': True,
+                 'HostConfig': data
                  }
     if host_path and container_path:
         # /opt:/opt/app:ro
-        param['HostConfig'] = {
-            'Binds': [
-                '%s:%s' % (host_path, container_path)
-            ],
-        }
+        data['Binds']=[
+                 '%s:%s' % (host_path, container_path)
+        ]
     if host_port and container_port:
-        if param.get('HostConfig'):
-            data = param.get('HostConfig')
-            data['PortBindings'] = {
-                '%s/tcp' % (container_port): [{'HostIp': '', 'HostPort': '%s' % (host_port)}]
-            }
-            param['HostConfig'] = data
-        else:
-            param['HostConfig'] = {
-                'PortBindings': {
-                    '%s/tcp' % (container_port): [{'HostIp': '', 'HostPort': '%s' % (host_port)}]
-                }
-            }
+        param['ExposedPorts'] = {
+            '%s/tcp' % (container_port): {}
+        }
+        data['PortBindings'] = {
+            '%s/tcp' % (container_port): [{'HostIp': '', 'HostPort': '%s' % (host_port)}]
+        }
+
     if memery:
-        param['Memory'] = int(memery) * 1024 * 1024
+        data['Memory'] = int(memery) * 1024 * 1024
     if cpu:  # Cpu ==> http://www.open-open.com/news/view/1780c43
-        param['CpuPeriod'] = 100000
-        param['CpuQuota'] = 10000 * int(float(cpu) * 10)
+        data['CpuPeriod'] = 100000
+        data['CpuQuota'] = 10000 * int(float(cpu) * 10)
     if cmd:
         param['Cmd'] = [cmd]
 
