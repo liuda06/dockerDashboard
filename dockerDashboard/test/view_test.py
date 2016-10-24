@@ -2,24 +2,27 @@ import json
 from dockerDashboard.http import http_client
 from dockerDashboard.api import docker_api
 
-DEFAULT_HOST = '192.168.137.147'
+DEFAULT_HOST = '0.0.0.0'
 DEFAULT_PORT = 2375
 
-param = {'Image': '7a',
+param = {'Image': 'kingaric/redis:latest',
          'OpenStdin': True,  # Keep STDIN open even if not attached -i
          'Tty': True,  # Allocate a pseudo-TTY -t
          'StdinOnce': False,  # StdinOnce':False== -d=true
          'PublishAllPorts': True,
+
+
          'HostConfig': {
              'Binds': [
                  '/opt:/opt/app',
                  '/vol:/vol/app:ro'
              ],
              'PortBindings': {
-                 '80/tcp': [{'HostIp': '', 'HostPort': '8085'}]
-             }
-         },
-
+                 '6379/tcp': [{'HostIp': '', 'HostPort': '16379'}]
+             },
+                'CpuPeriod':100000,
+                'CpuQuota':100000,
+              },
          }
 param = json.dumps(param)
 
